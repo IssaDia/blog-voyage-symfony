@@ -21,7 +21,7 @@ coding rules
 Requirements
 
     Php 7.2
-    Symfony 4.2.2
+    Symfony 4.2.2 (composer create-project symfony/skeleton storm)
     MySQl
 
 Installation Step By Step
