@@ -1,4 +1,7 @@
-Voyage Voyage
+
+                            /////////////////////////////////////////////////////////////
+                            ////////////////////////VOYAGE VOYAGE///////////////////////
+                            ///////////////////////////////////////////////////////////
 
 Blog de voyage avec accés à des articles, création d'articles, modifications d'articles et 
 possibilité de poster des commentaires.
