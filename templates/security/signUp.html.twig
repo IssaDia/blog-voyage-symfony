@@ -1,0 +1,54 @@
+{% block body %}
+
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+	<a type="button" onclick="history.back()">&larr; return to Blog</a>
+
+	<section class="get-in-touch">
+		<h1 class="title">Inscription</h1>
+
+		{{ form_start(form, {'attr': {'class': 'contact-form row'}}) }}
+
+		<div class="form-field col-lg-6 ">
+			{{ form_widget(form.lastName, { 'id': 'email',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(form.lastName, 'Nom', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+		<div class="form-field col-lg-6 ">
+
+			{{ form_widget(form.firstName, { 'id': 'subject',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(form.firstName, 'Prénom', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+
+        <div class="form-field col-lg-6 ">
+			{{ form_widget(form.email, { 'id': 'email',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(form.email, 'Email', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+		<div class="form-field col-lg-12">
+			{{ form_widget(form.password, { 'id': 'message',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(form.password, 'Password', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+        <div class="form-field col-lg-12">
+			{{ form_widget(form.confirm_password, { 'id': 'message',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(form.confirm_password, 'Confirm Password', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+
+
+		{{ form_end(form) }}
+
+	</section>
+
+		{{ include('/blog/footer.html.twig') }}
+
+
+
+{% endblock %}

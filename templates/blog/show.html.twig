@@ -1,65 +1,92 @@
-
-
-
-
-
 {% extends 'base.html.twig' %}
 
 {% form_theme formComment 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
- <section>
-  <article>
+
+	{{ include('/blog/navbar.html.twig') }}
+
+	<section>
+		<article>
 
 
-    <div class="row">
-    <div class="col-md-12 text-center">
+			<div class="row">
+				<div class="col-md-12 text-center">
 
-  <h1>{{article.title}}</h1>
-  <p>{{article.category.title}}</p>
-  <img src="../../assets/images/{{article.image}}" class="img-fluid" alt="Responsive image">
-  <p>{{article.content | raw}}<p>
+					<h1>{{article.title}}</h1>
+					<p>{{article.category.title}}</p>
+					<img src="../../assets/images/{{article.image}}" class="img-fluid" alt="Responsive image">
+					<p>{{article.content | raw}}</p>
+					<p>
 
-  Ecrit le {{article.createdAt | date('d/m/Y')}} {{article.createdAt | date('H:i')}}
+						Ecrit le
+						{{article.createdAt | date('d/m/Y')}}
+						{{article.createdAt | date('H:i')}}
 
-  <div class="row ">
-        <div class="col-md-12 text-center crud">
-  <ul>
-    <li><a href="{{path('blog_edit', {'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
-    <li><a href="{{path('blog_delete', {'id':article.id})}}"><i class="fas fa-trash-alt"></i></a>
-  </li>
-  </ul>
+						<div class="row ">
+							<div class="col-md-12 text-center crud">
+								<ul>
+									<li><ahref="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
+									<li><ahref="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
+								</ul>
 
-  </div>
-  </div>
-
-</article>
-
-<h3>Laissez un commentaire</h3>
+							</div>
+						</div>
+					</p>
+				</article>
 
 
-{{form_start(formComment)}}
+				<p>
+					{{comments | length}}
+					commentaire(s)
+				</p>
 
-{{ form_row(formComment.author, {'attr': {'placeholder': "Pseudo"}}) }}
-{{ form_row(formComment.content, {'attr': {'placeholder': "Votre Commentaire"}}) }}
- <button type="submit" class="btn btn-success">Valider</button>
+				{% for comment in comments %}
 
-   {{form_end(formComment)}}
+					<div class="list-comments">
 
-{% for comment in comments %}
+						<div style="font-weight:bold">{{comment.author}}</div>
+						<div>{{comment.content}}</div>
+						{{comment.createdAt | date('d/m/Y')}}
+						<div align="right">
 
-<div class="list-comments">
-            <div style="font-weight:bold">{{comment.author}}</div>
-            <div>{{comment.content}}</div>
-            {{comment.createdAt | date('d/m/Y')}}
-            <div align="right">
+							<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
+								<i class="fas fa-trash-alt"></i>
+							</a>
 
-              <a href="{{path('blog_deleteComment', {'id':comment.id})}}"><i class="fas fa-trash-alt"></i></a>
+						</div>
+					</div>
 
-            </div>
-          </div>
+				{% endfor %}
 
-{% endfor %}
+				{% if app.user %}
 
- </section>
-{% endblock %}
+					<h3>Laissez un commentaire</h3>
+
+
+					{{form_start(formComment)}}
+
+					{{ form_row(formComment.author, {'attr': {'placeholder': "Pseudo"}}) }}
+					{{ form_row(formComment.content, {'attr': {'placeholder': "Votre Commentaire"}}) }}
+					<button type="submit" class="btn btn-success">Valider</button>
+
+					{{form_end(formComment)}}
+
+				{% else %}
+
+					<h3>Vous devez être inscrit pour faire un commentaire<h3>
+							<p>
+								C'est votre premiére visite?
+								<a href="{{path('signUp')}}">Créer un compte</a>
+							</p>
+							<p>Déja membre?<a href="{{path('signIn')}}">Se connecter</a>
+							</p>
+
+						{% endif %}
+
+
+					</section>
+
+					{{ include('/blog/footer.html.twig') }}
+
+				{% endblock %}

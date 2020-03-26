@@ -36,7 +36,7 @@ class Article
      * @ORM\Column(type="text")
      * @Assert\Length(
      *      min = 2,
-     *      max = 100,
+     *      max = 1000,
      *      minMessage = "Veuillez entrer plus de  {{ limit }} caractéres pour valider le contenu de votre article",
      *      maxMessage = "Veuillez entrer un contenu de  moins de  {{ limit }} caractéres"
      * )
