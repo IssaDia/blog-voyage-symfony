@@ -3,19 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Article;
 use App\Form\SignUpType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/inscription", name="signUp")
      */
-    public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder,ValidatorInterface $validator)
     {
         $user = new User();
 
@@ -28,7 +32,7 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            return $this->redirectToRoute('signIn');
+            return $this->redirectToRoute('blog');
         }
 
         return $this->render('security/signUp.html.twig', [
@@ -41,7 +45,8 @@ class SecurityController extends AbstractController
      */
     public function login(){
 
-        return $this->render('security/signIn.html.twig');
+
+        return $this->render('security/error.html.twig');
 
        
     }
@@ -50,8 +55,9 @@ class SecurityController extends AbstractController
      * @Route("/deconnexion", name="signOut")
      */
     public function logout(){
+  
         
-       
+        
     }
 }
 

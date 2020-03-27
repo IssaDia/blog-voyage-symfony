@@ -15,23 +15,26 @@
 
 					<h1>{{article.title}}</h1>
 					<p>{{article.category.title}}</p>
-					<img src="../../assets/images/{{article.image}}" class="img-fluid" alt="Responsive image">
+					<img src="{{asset('build/images/')}}{{article.image}}" class="img-fluid" alt="Responsive image">
 					<p>{{article.content | raw}}</p>
 					<p>
 
 						Ecrit le
 						{{article.createdAt | date('d/m/Y')}}
 						{{article.createdAt | date('H:i')}}
+						{% if app.user %}
 
 						<div class="row ">
 							<div class="col-md-12 text-center crud">
 								<ul>
-									<li><ahref="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
-									<li><ahref="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
+									<li><a href="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
+									<li><a href="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
 								</ul>
 
 							</div>
 						</div>
+
+						{% endif %}
 					</p>
 				</article>
 
@@ -49,10 +52,11 @@
 						<div>{{comment.content}}</div>
 						{{comment.createdAt | date('d/m/Y')}}
 						<div align="right">
-
+							{% if app.user %}
 							<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
 								<i class="fas fa-trash-alt"></i>
 							</a>
+							{% endif %}
 
 						</div>
 					</div>
@@ -72,6 +76,9 @@
 
 					{{form_end(formComment)}}
 
+					<a class="nav-link" href="{{path('signOut')}}">Déconnexion</i></a>
+					</section>
+
 				{% else %}
 
 					<h3>Vous devez être inscrit pour faire un commentaire<h3>
@@ -84,8 +91,7 @@
 
 						{% endif %}
 
-
-					</section>
+					
 
 					{{ include('/blog/footer.html.twig') }}
 
