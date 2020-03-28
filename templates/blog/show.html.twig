@@ -15,29 +15,28 @@
 
 					<h1>{{article.title}}</h1>
 					<p>{{article.category.title}}</p>
-					<img src="{{asset('build/images/')}}{{article.image}}" class="img-fluid" alt="Responsive image">
-					<p>{{article.content | raw}}</p>
-					<p>
+					<img src="{{asset('build/images/')}}{{article.image}}" class="img-fluid img-article" alt="Responsive image">
+					<p class="text-article">{{article.content | raw}}</p>
+					<p class="text-article">
 
 						Ecrit le
 						{{article.createdAt | date('d/m/Y')}}
 						{{article.createdAt | date('H:i')}}
 						{% if app.user %}
 
-						<div class="row ">
-							<div class="col-md-12 text-center crud">
-								<ul>
-									<li><a href="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
-									<li><a href="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
-								</ul>
+							<div class="row ">
+								<div class="col-md-12 text-center crud">
+									<ul>
+										<li><ahref="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
+										<li><ahref="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
+									</ul>
 
+								</div>
 							</div>
-						</div>
 
 						{% endif %}
 					</p>
 				</article>
-
 
 				<p>
 					{{comments | length}}
@@ -46,53 +45,72 @@
 
 				{% for comment in comments %}
 
-					<div class="list-comments">
 
-						<div style="font-weight:bold">{{comment.author}}</div>
-						<div>{{comment.content}}</div>
-						{{comment.createdAt | date('d/m/Y')}}
-						<div align="right">
-							{% if app.user %}
-							<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
-								<i class="fas fa-trash-alt"></i>
-							</a>
-							{% endif %}
+					<div class="row">
 
+						<div class="message_cont col-md-12">
+
+							<div class="message">
+								<p class="message_title">{{comment.author}}:
+								</p>
+								<div class="message_blurb">
+									<p class="message_blurb_p">
+										{{comment.content}}
+									</p>
+									<p>{{comment.createdAt | date('d/m/Y')}}</p>
+
+								
+								</div>
+							</div>
+								<div align="right">
+										{% if app.user %}
+											<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
+												<i class="fas fa-trash-alt"></i>
+											</a>
+										{% endif %}
+
+									</div>
 						</div>
 					</div>
+
 
 				{% endfor %}
 
 				{% if app.user %}
 
+				{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
+
 					<h3>Laissez un commentaire</h3>
 
 
 					{{form_start(formComment)}}
-
+					<div class="form-field col-lg-6 ">
 					{{ form_row(formComment.author, {'attr': {'placeholder': "Pseudo"}}) }}
+					</div>
+					<div class="form-field col-lg-6 ">
 					{{ form_row(formComment.content, {'attr': {'placeholder': "Votre Commentaire"}}) }}
-					<button type="submit" class="btn btn-success">Valider</button>
+					</div>
+					<button type="submit" class="btn btn-comment">Valider</button>
 
 					{{form_end(formComment)}}
 
-					<a class="nav-link" href="{{path('signOut')}}">Déconnexion</i></a>
-					</section>
+					<a class="nav-link" href="{{path('signOut')}}">Déconnexion</i>
+				</a>
+			</section>
 
-				{% else %}
+		{% else %}
 
-					<h3>Vous devez être inscrit pour faire un commentaire<h3>
-							<p>
-								C'est votre premiére visite?
-								<a href="{{path('signUp')}}">Créer un compte</a>
-							</p>
-							<p>Déja membre?<a href="{{path('signIn')}}">Se connecter</a>
-							</p>
+			<h3>Vous devez être inscrit pour faire un commentaire<h3>
+					<p>
+						C'est votre premiére visite?
+						<a href="{{path('signUp')}}">Créer un compte</a>
+					</p>
+					<p>Déja membre?<a href="{{path('signIn')}}">Se connecter</a>
+					</p>
 
-						{% endif %}
+				{% endif %}
 
-					
 
-					{{ include('/blog/footer.html.twig') }}
+				{{ include('/blog/footer.html.twig') }}
 
-				{% endblock %}
+			{% endblock %}
