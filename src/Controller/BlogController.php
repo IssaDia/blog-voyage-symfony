@@ -15,195 +15,207 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
-class BlogController extends AbstractController{
+class BlogController extends AbstractController
+{
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////DISPLAY ARTICLES///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * Display all Articles on a page using the article repository
+   */
 
-    /**
-     * @Route("/blog", name="blog")
-     */
 
-    public function index()
-    {
+  /**
+   * @Route("/blog", name="blog")
+   */
 
-      $articles = $this->getDoctrine()
-        ->getRepository(Article::class)
-        ->findAll();
+  public function index()
+  {
 
-        return $this->render('blog/index.html.twig',['articles'=>$articles]);
+    $articles = $this->getDoctrine()
+      ->getRepository(Article::class)
+      ->findAll();
+
+    return $this->render('blog/index.html.twig', ['articles' => $articles]);
+  }
+
+
+  /**
+   * Display Home Page
+   */
+
+  /**
+   * @Route("/", name="home")
+   */
+
+  public function home()
+  {
+
+    return $this->render('blog/home.html.twig');
+    
+  }
+
+
+  
+  /**
+   * Form to create an article or modify it
+   */
+
+  /**
+   * @Route("/blog/new", name="blog_create")
+   * @Route("/blog/{id}/edit", name="blog_edit")
+   */
+
+  public function form(Article $article = null, Request $request, ObjectManager $manager)
+  {
+
+    if (!$article) {
+
+      $article = new Article();
     }
 
+    $form = $this->createFormBuilder($article)
+      ->add('title', TextType::class, array('data_class' => null), null, array('label' => false))
+      ->add('content', TextareaType::class, array('data_class' => null), array('label' => false))
+      ->add(
+        'category',
+        EntityType::class,
+        [
+          'class' => Category::class,
+          'choice_label' => 'title'
+        ]
+      )
+      ->add('image', FileType::class, array('data_class' => null), null, array('label' => false))
+      ->getForm();
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////DISPLAY HOME///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @Route("/", name="home")
- */
-
- public function home(){
-
-   return $this->render('blog/home.html.twig');
-   $error = $authenticationUtils->getLastAuthenticationError();
-
-}
+    $form->handleRequest($request);
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////CREATE OR MODIFY ARTICLE///////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if ($form->isSubmitted() && $form->isValid()) {
 
-    /**
-     * @Route("/blog/new", name="blog_create")
-     * @Route("/blog/{id}/edit", name="blog_edit")
-     */
+      $file = $article->getImage();
+      $filename = $file->getClientOriginalName();
 
-    public function form(Article $article = null, Request $request, ObjectManager $manager){
-
-      if(!$article){
-
-        $article = new Article();
+      try {
+        $file->move(
+          $this->getParameter('images_directory'),
+          $filename
+        );
+      } catch (FileException $e) {
+        // ... handle exception if something happens during file upload
       }
+      $article->setImage($filename);
 
-      $form = $this->createFormBuilder($article)
-                      ->add('title', TextType::class,array('data_class' => null),null, array('label' => false))
-                      ->add('content', TextType::class, array('data_class' => null), array('label' => false))
-                      ->add('category', EntityType::class,
-                       ['class' => Category::class,
-                        'choice_label' =>'title'])
-                      ->add('image', FileType::class,array('data_class' => null),null, array('label' => false))
-                      ->getForm();
+      $article->setCreatedAt(new \DateTime());
 
-      $form->handleRequest($request);
+      $manager->persist($article);
+      $manager->flush();
 
-
-      if ($form->isSubmitted() && $form->isValid()) {
-
-          $file = $article->getImage();
-          $filename = $file->getClientOriginalName();
-
-          try {
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $filename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-          $article->setImage($filename);
-
-          $article->setCreatedAt(new \DateTime());
-
-        $manager->persist($article);
-        $manager->flush();
-
-        return $this->redirectToRoute('blog', ['id' => $article->getId()]);
-
-      }
-
-      return $this->render('blog/create.html.twig',
-      ['formArticle' => $form->createView(),'editMode' => $article->getId() !== null
-    ]);
-
+      return $this->redirectToRoute('blog', ['id' => $article->getId()]);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////DELETE ARTICLE/////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    return $this->render(
+      'blog/create.html.twig',
+      [
+        'formArticle' => $form->createView(), 'editMode' => $article->getId() !== null
+      ]
+    );
+  }
 
-    /**
-     * @Route("/blog/{id}/delete", name="blog_delete")
-     * @Route("/blog/article/{id}", name="blog_show")
-     */
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////DELETE ARTICLE/////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * @Route("/blog/{id}/delete", name="blog_delete")
+   * @Route("/blog/article/{id}", name="blog_show")
+   */
 
 
-    public function delete(Article $article, Request $request, ObjectManager $manager){
+  public function delete(Article $article, Request $request, ObjectManager $manager)
+  {
 
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->remove($article);
-        $manager->flush();
+    $manager = $this->getDoctrine()->getManager();
+    $manager->remove($article);
+    $manager->flush();
 
-        return $this->redirectToRoute('blog', ['id' => $article->getId()]);
-    }
+    return $this->redirectToRoute('blog', ['id' => $article->getId()]);
+  }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////DISPLAY ARTICLE AND COMMENTS///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////DISPLAY ARTICLE AND COMMENTS///////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * @Route("/blog/article/{id}", name="blog_show")
-     */
+  /**
+   * @Route("/blog/article/{id}", name="blog_show")
+   */
 
-    public function show($id ,Article $article = null, Request $request, ObjectManager $manager){
+  public function show($id, Article $article = null, Request $request, ObjectManager $manager)
+  {
 
-      ///display article by ID
+    ///display article by ID
 
-      $articles = $this->getDoctrine()
+    $articles = $this->getDoctrine()
       ->getRepository(Article::class)
       ->find($id);
 
-      ///create new comment form
+    ///create new comment form
 
-      $comment = new Comment();
+    $comment = new Comment();
 
-      $form = $this->createFormBuilder($comment)
-              ->add('author',null, array('label' => false))
-              ->add('content',null, array('label' => false))
-              ->getForm();
+    $form = $this->createFormBuilder($comment)
+      ->add('author', null, array('label' => false))
+      ->add('content', null, array('label' => false))
+      ->getForm();
 
-      ///repatriate comment to database
+    ///repatriate comment to database
 
-      $form->handleRequest($request);
+    $form->handleRequest($request);
 
-      $manager = $this->getDoctrine()->getManager();
+    $manager = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    if ($form->isSubmitted() && $form->isValid()) {
 
-              $comment->setCreatedAt(new \DateTime());
-              $comment->setArticle($article);
+      $comment->setCreatedAt(new \DateTime());
+      $comment->setArticle($article);
 
-              $manager->persist($comment);
-              $manager->flush();
+      $manager->persist($comment);
+      $manager->flush();
 
-              return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
-
-              }
-
-      return $this->render('blog/show.html.twig',['article'=>$articles,'comments'=>$article->getComments(), 'formComment' => $form->createView()]);
+      return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////DELETE ARTICLE/////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     *@Route("/blog/deleteComment/{id}", name="blog_deleteComment")
-     */
+    return $this->render('blog/show.html.twig', ['article' => $articles, 'comments' => $article->getComments(), 'formComment' => $form->createView()]);
+  }
 
 
-    public function deleteComment($id, Request $request, ObjectManager $manager){
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////DELETE ARTICLE/////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      ///get id from comment
+  /**
+   *@Route("/blog/deleteComment/{id}", name="blog_deleteComment")
+   */
 
-      $comment = $this->getDoctrine()
+
+  public function deleteComment($id, Request $request, ObjectManager $manager)
+  {
+
+    ///get id from comment
+
+    $comment = $this->getDoctrine()
       ->getRepository(Comment::class)
       ->find($id);
 
 
-      ///delete id from database
+    ///delete id from database
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->remove($comment);
-        $manager->flush();
+    $manager = $this->getDoctrine()->getManager();
+    $manager->remove($comment);
+    $manager->flush();
 
-        return $this->redirectToRoute('blog', ['id' => $comment->getId()]);
-    }
-
+    return $this->redirectToRoute('blog', ['id' => $comment->getId()]);
+  }
 }

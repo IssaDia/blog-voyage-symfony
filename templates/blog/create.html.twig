@@ -1,47 +1,72 @@
-
-
 {% extends 'base.html.twig' %}
 
 {% form_theme formArticle  'bootstrap_4_layout.html.twig' %}
 
-  {% block body %}
+{% block body %}
 
-    {% if editMode %}
+	<a type="button" onclick="history.back()">&larr; return to Blog</a>
 
-      <h1>Modifier cet article:</h1>
+	<section class="get-in-touch">
 
-    {% else %}
+		{% if editMode %}
 
-      <h1>Ajouter un article :</h1>
+			<h1 class="title">Modifier cet article:</h1>
 
-    {% endif %}
+		{% else %}
 
-    {{form_start(formArticle)}}
+			<h1 class="title">Ajouter un article :</h1>
 
-    {{form_row(formArticle.category)}}
+		{% endif %}
 
-    {{ form_row(formArticle.title, {'attr': {'placeholder': "Titre de l'article"}}) }}
+		{{form_start(formArticle, {'attr': {'class': 'contact-form row'}}) }}
 
-    {{ form_row(formArticle.content, {'attr': {'placeholder': "Contenu de l'article"}}) }}
+		<div class="form-field col-lg-12 ">
+			{{ form_widget(formArticle.category
+			)}}
+		</div>
 
-    {{ form_row(formArticle.image,{'attr': {'placeholder': "photo de votre article"}}) }}
+		<div class="form-field col-lg-12 ">
+			{{ form_label(formArticle.title, 'Title') }}
+			{{ form_widget(formArticle.title
+			)}}
 
-    <button type="submit" class="btn btn-success">
+		</div>
 
-      {% if editMode %}
-
-        Enregistrer les modifications
-
-      {% else %}
-
-        Ajouter l'article
-
-      {% endif %}
-
-    </button>
+		<div class="form-field col-lg-12 ">
+			{{ form_label(formArticle.content, 'Content') }}
+			{{ form_widget(formArticle.content,{ 'attr': {'rows': '6'} }, { 'id': 'subject',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
 
 
-    {{form_end(formArticle)}}
+		</div>
+
+
+		<div class="form-field col-lg-12 ">
+
+			{{ form_widget(formArticle.image, { 'id': 'subject',  'attr': { 'class' : 'input-text js-input' }}
+			)}}
+			{{ form_label(formArticle.image, 'Image', { 'label_attr': {'class': 'label'} }) }}
+
+		</div>
+
+		<button type="submit" class="button-create">
+
+			{% if editMode %}
+
+				Enregistrer
+
+			{% else %}
+
+				Ajouter
+
+			{% endif %}
+
+		</button>
+
+	</section>
+
+
+	{{form_end(formArticle)}}
 
 
 {% endblock %}

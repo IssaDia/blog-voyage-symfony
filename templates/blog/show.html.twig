@@ -25,10 +25,10 @@
 						{% if app.user %}
 
 							<div class="row ">
-								<div class="col-md-12 text-center crud">
+								<div class="col-md-12 text-center">
 									<ul>
-										<li><ahref="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
-										<li><ahref="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
+										<li><a href="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
+										<li><a href="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
 									</ul>
 
 								</div>

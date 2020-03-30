@@ -14,7 +14,7 @@ h1 {
 h2 {
 
   color: #333;
-  font-size:38px;
+  font-size: 38px;
   font-family: "Rozha One", Sans-serif;
   text-align: center;
   padding-top: 20px;
@@ -105,25 +105,11 @@ body {
 
 }
 
-.crud {
-
-  display: flex;
-  justify-content: flex-end;
-
-}
-
-
-.crud a {
-
-  font-size: 40px;
-  margin: 0 20px 0 0;
-
-}
-
 .formulaires {
 
   height: 550px;
 }
+
 
 
 
@@ -536,6 +522,10 @@ a {
 
 }
 
+.button-create {
+  margin: auto !important;
+}
+
 .get-in-touch .title {
   text-align: center;
   text-transform: uppercase;
@@ -643,7 +633,7 @@ a {
   color: #dafffb !important;
 }
 
-.navbar-brand{
+.navbar-brand {
   color: #dafffb !important;
 }
 
@@ -922,8 +912,8 @@ a {
   position: absolute;
   left: 50%;
   top: 50%;
- 
- 
+
+
 }
 
 .notfound {
@@ -977,7 +967,7 @@ a {
 
 .bg-img {
   /* The image used */
-  background-image:url("../images/pencil.jpg");
+  background-image: url("../images/pencil.jpg");
 
   min-height: 450px;
 
@@ -1014,76 +1004,76 @@ a {
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 .footer {
-    font-family: Raleway, sans-serif;
-    width: 100%;
-    margin: 2em 0;
-    height: 70px;
-    background-color: #000;
+  font-family: Raleway, sans-serif;
+  width: 100%;
+  margin: 2em 0;
+  height: 70px;
+  background-color: #000;
 }
 
 .copyright {
-    width: 50%;
-    float: left;
+  width: 50%;
+  float: left;
 
 }
 
 .footer p {
-    padding-left: 10%;
-    color: white;
-    font-size: 0.7em;
-    line-height: 70px;
-    text-transform: capitalize;
-    letter-spacing: 1px;
+  padding-left: 10%;
+  color: white;
+  font-size: 0.7em;
+  line-height: 70px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
 
-    @media (max-width: 600px) {
-        text-align: center;
-        padding: 0;
-    }
+  @media (max-width: 600px) {
+    text-align: center;
+    padding: 0;
+  }
 
 }
 
 .social {
-    width: 50%;
-    float: right;
+  width: 50%;
+  float: right;
 
-    @media (max-width: 600px) {
-        width: 100%;
-    }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 
 }
 
 .footer a {
-    float: left;
-    line-height: 70px;
-    text-decoration: none;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    transition: all 0.3s;
+  float: left;
+  line-height: 70px;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.3s;
 
 }
 
 footer .social a:hover {
-    background-color: #222;
-    transition: all .3s;
+  background-color: #222;
+  transition: all .3s;
 }
 
 .git {
-    background-color: #3D5B94;
-    font-size: 1.2em;
-    width: 33%;
+  background-color: #3D5B94;
+  font-size: 1.2em;
+  width: 33%;
 }
 
 .contact {
-    background-color: #6dcd9a;
-    font-size: 0.8em;
-    width: 33%;
+  background-color: #6dcd9a;
+  font-size: 0.8em;
+  width: 33%;
 }
 
 .linkedin {
-    background-color: #1E83AE;
-    font-size: 1.2em;
-    width: 33%;
+  background-color: #1E83AE;
+  font-size: 1.2em;
+  width: 33%;
 }
 
 
