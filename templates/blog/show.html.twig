@@ -8,48 +8,36 @@
 
 	<section>
 		<article>
-
-
 			<div class="row">
 				<div class="col-md-12 text-center">
-
-					<h1>{{article.title}}</h1>
+					<h1><span>{{article.title}}</span></h1>
 					<p>{{article.category.title}}</p>
 					<img src="{{asset('build/images/')}}{{article.image}}" class="img-fluid img-article" alt="Responsive image">
 					<p class="text-article">{{article.content | raw}}</p>
 					<p class="text-article">
-
 						Ecrit le
 						{{article.createdAt | date('d/m/Y')}}
 						{{article.createdAt | date('H:i')}}
 						{% if app.user %}
-
 							<div class="row ">
 								<div class="col-md-12 text-center">
 									<ul>
-										<li><a href="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
-										<li><a href="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
+										<li><ahref="{{path('blog_edit',{'id':article.id})}}"><i class="fas fa-edit"></i></a></li>
+										<li><ahref="{{path('blog_delete',{'id':article.id})}}"><i class="fas fa-trash-alt"></i></a></li>
 									</ul>
 
 								</div>
 							</div>
-
 						{% endif %}
 					</p>
 				</article>
-
 				<p>
 					{{comments | length}}
 					commentaire(s)
 				</p>
-
 				{% for comment in comments %}
-
-
 					<div class="row">
-
 						<div class="message_cont col-md-12">
-
 							<div class="message">
 								<p class="message_title">{{comment.author}}:
 								</p>
@@ -58,37 +46,30 @@
 										{{comment.content}}
 									</p>
 									<p>{{comment.createdAt | date('d/m/Y')}}</p>
-
-								
 								</div>
 							</div>
-								<div align="right">
-										{% if app.user %}
-											<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
-												<i class="fas fa-trash-alt"></i>
-											</a>
-										{% endif %}
-
-									</div>
+							<div align="right">
+								{% if app.user %}
+									<a href="{{path('blog_deleteComment', {'id':comment.id})}}">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								{% endif %}
+							</div>
 						</div>
 					</div>
-
-
 				{% endfor %}
 
 				{% if app.user %}
 
-				{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
+					{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
 
 					<h3>Laissez un commentaire</h3>
-
-
 					{{form_start(formComment)}}
 					<div class="form-field col-lg-6 ">
-					{{ form_row(formComment.author, {'attr': {'placeholder': "Pseudo"}}) }}
+						{{ form_row(formComment.author, {'attr': {'placeholder': "Pseudo"}}) }}
 					</div>
 					<div class="form-field col-lg-6 ">
-					{{ form_row(formComment.content, {'attr': {'placeholder': "Votre Commentaire"}}) }}
+						{{ form_row(formComment.content, {'attr': {'placeholder': "Votre Commentaire"}}) }}
 					</div>
 					<button type="submit" class="btn btn-comment">Valider</button>
 

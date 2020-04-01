@@ -7,67 +7,57 @@
 {% block body %}
 
 	{{ include('/blog/navbar.html.twig') }}
-
-
-	<div class="container">
-
-		<h6>Voyages</h6>
-
+	
+		<h1><span>Voyages</span></h1>
 		<div class="row">
 			{% for article in articles %}
 
 				<div class="container mt-5">
-			<div class="row">
-				<div class="col-12">
-					<article class="blog-card">
-						<div class="blog-card__background">
-							<div class="card__background--wrapper">
-								<div class="card__background--main" style="background-image: url('{{asset('build/images/')}}{{article.image}}');">
-									<div class="card__background--layer"></div>
-								</div>
-							</div>
-						</div>
-						<div class="blog-card__head">
-							<span class="date__box">
-								<span class="date__day">{{article.createdAt | date('d')}}</span>
-								<span class="date__month">{{article.createdAt | date('m')}}</span>
-							</span>
-						</div>
-						<div class="blog-card__info">
-							<a href="{{path('blog_show', {'id':article.id})}}">
-								<h2>{{article.title}}</h2>
-							</a>
-							<p>
-								<div class="blog-header">
-									<div class="blog-author--no-cover">
-										<h3>Issa Dia</h3>
+					<div class="row">
+						<div class="col-12">
+							<article class="blog-card">
+								<div class="blog-card__background">
+									<div class="card__background--wrapper">
+										<div class="card__background--main" style="background-image: url('{{asset('build/images/')}}{{article.image}}');">
+											<div class="card__background--layer"></div>
+										</div>
 									</div>
 								</div>
-							</p>
-							<p>{{article.content |slice(0, 70)}}
-								...
-							
-							</p>
-							<a href="{{path('blog_show', {'id':article.id})}}" class="btn btn--with-icon">
-								<i class="btn-icon fa fa-long-arrow-right"></i>READ MORE</a>
+								<div class="blog-card__head">
+									<span class="date__box">
+										<span class="date__day">{{article.createdAt | date('d')}}</span>
+										<span class="date__month">{{article.createdAt | date('m')}}</span>
+									</span>
+								</div>
+								<div class="blog-card__info">
+									<a href="{{path('blog_show', {'id':article.id})}}">
+										<h2>{{article.title}}</h2>
+									</a>
+									<p>
+										<div class="blog-header">
+											<div class="blog-author--no-cover">
+												<h3>Issa Dia</h3>
+											</div>
+										</div>
+									</p>
+									<p>{{article.content |slice(0, 70)}}
+										...
+
+									</p>
+									<a href="{{path('blog_show', {'id':article.id})}}" class="btn btn--with-icon">
+										<i class="btn-icon fa fa-long-arrow-right"></i>READ MORE</a>
+								</div>
+							</article>
 						</div>
-					</article>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<section class="detail-page">
-			<div class="container mt-5"></div>
-		</section>
+				<section class="detail-page">
+					<div class="container mt-5"></div>
+				</section>
+			
+
+		{% endfor %}
 	</div>
-
-			{% endfor %}
-		</div>
-
-
-		
-
 	{{ include('/blog/footer.html.twig') }}
-
-
 {% endblock %}

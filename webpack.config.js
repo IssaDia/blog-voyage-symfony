@@ -19,6 +19,7 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addStyleEntry('app', './assets/js/app.js')
+    .addStyleEntry('style', './assets/css/style.scss')
 
     .addPlugin(new CopyWebpackPlugin([
         { from: './assets/images', to: 'images' }
