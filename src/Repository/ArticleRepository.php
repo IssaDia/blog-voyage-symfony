@@ -47,4 +47,31 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Post[]
+     */
+    public function findBySearchQuery(string $query): array
+    {
+        $searchTerms = $this->extractSearchTerms($query);
+
+        if (0 === \count($searchTerms)) {
+            return [];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                ->orWhere('p.title LIKE :t_'.$key)
+                ->setParameter('t_'.$key, '%'.$term.'%')
+            ;
+        }
+
+        return $queryBuilder
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
