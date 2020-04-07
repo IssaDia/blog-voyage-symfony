@@ -19,22 +19,23 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function searchArticle($query)
     {
+
+        
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('a.title LIKE :query')
+            ->setParameter('query', $query)
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getResult();
+
         ;
     }
-    */
+    
+
 
     /*
     public function findOneBySomeField($value): ?Article
@@ -48,30 +49,5 @@ class ArticleRepository extends ServiceEntityRepository
     }
     */
 
-    /**
-     * @return Post[]
-     */
-    public function findBySearchQuery(string $query): array
-    {
-        $searchTerms = $this->extractSearchTerms($query);
-
-        if (0 === \count($searchTerms)) {
-            return [];
-        }
-
-        $queryBuilder = $this->createQueryBuilder('p');
-
-        foreach ($searchTerms as $key => $term) {
-            $queryBuilder
-                ->orWhere('p.title LIKE :t_'.$key)
-                ->setParameter('t_'.$key, '%'.$term.'%')
-            ;
-        }
-
-        return $queryBuilder
-            ->orderBy('p.publishedAt', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-
+  
 }

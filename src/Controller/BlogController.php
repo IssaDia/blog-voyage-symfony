@@ -152,7 +152,7 @@ class BlogController extends AbstractController
    * @Route("/blog/article/{id}", name="blog_show")
    */
 
-  public function show($id, Article $article = null, Request $request, ObjectManager $manager)
+  public function show($id, Article $article = null, Request $request, ObjectManager $manager,  Comment $comment)
   {
 
     ///display article by ID

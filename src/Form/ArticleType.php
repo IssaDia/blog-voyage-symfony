@@ -3,10 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
