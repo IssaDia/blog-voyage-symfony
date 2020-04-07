@@ -15,42 +15,28 @@ class SearchController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    public function search(Request $request)
+    public function search(Request $request, ArticleRepository $articleRepository)
     {
 
         $searchForm = $this->createFormBuilder(null)
             ->add('recherche', TextType::class)
             ->add('submit', SubmitType::class)
             ->getForm();
-        
-        $searchForm->handleRequest($request);
-        $response = $this->forward('App\Controller\SearchController::results', [
-            'request' => $request
-        ]);
 
-        return $response;
-       
+
+        if ($searchForm->handleRequest($request)->isSubmitted() && $searchForm->isValid()) {
+            $query = $request->request->get('form')['recherche'];
+        $results = $articleRepository->searchArticle($query);
+
+        return $this->render('search/results.html.twig', [
+            'results' => $results
+        ]);
+        };
+
 
         return $this->render('search/search.html.twig', [
             'searchForm' => $searchForm->createView(),
         ]);
-
-        
     }
 
-    /**
-     * @Route("/results", name="results")
-     */
-    public function results(ArticleRepository $articleRepository, $request)
-    {
-
-
-        $query = $request->request->get('form')['recherche'];
-        $results = $articleRepository->searchArticle($query);
-
-        
-        return $this->render('search/results.html.twig', [
-            'results' => $results
-        ]);
-    }
 }

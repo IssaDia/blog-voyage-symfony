@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SearchController!{% endblock %}
-
 {% block body %}
-    <div class='container'>
-        {{form(searchForm)}}
-       
-    </div>
-{% endblock %}
+	{{ include('/blog/navbar.html.twig') }}
+    		<h1><span>Recherche</span></h1>
+
+
+	{{form(searchForm)}}
+		{{ include('/blog/footer.html.twig') }}
+	{% endblock %}
