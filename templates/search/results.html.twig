@@ -1,5 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Destinations
+{% endblock %}
+
 
 {% block body %}
-    <h1> Results : </h1>
 
+	{{ include('/blog/navbar.html.twig') }}
+	
+		<h1><span>Resultats</span></h1>
+		<div class="row">
+			{% for result in results %}
+
+				<div class="container mt-5">
+					<div class="row">
+						<div class="col-12">
+							<result class="blog-card">
+								<div class="blog-card__background">
+									<div class="card__background--wrapper">
+										<div class="card__background--main" style="background-image: url('{{asset('build/images/')}}{{result.image}}');">
+											<div class="card__background--layer"></div>
+										</div>
+									</div>
+								</div>
+								<div class="blog-card__head">
+									<span class="date__box">
+										<span class="date__day">{{result.createdAt | date('d')}}</span>
+										<span class="date__month">{{result.createdAt | date('m')}}</span>
+									</span>
+								</div>
+								<div class="blog-card__info">
+									<a href="{{path('blog_show', {'id':result.id})}}">
+										<h2>{{result.title}}</h2>
+									</a>
+									<p>
+										<div class="blog-header">
+											<div class="blog-author--no-cover">
+												<h3>Issa Dia</h3>
+											</div>
+										</div>
+									</p>
+									<p>{{result.content |slice(0, 70)}}
+										...
+
+									</p>
+									<a href="{{path('blog_show', {'id':result.id})}}" class="btn btn--with-icon">
+										<i class="btn-icon fa fa-long-arrow-right"></i>READ MORE</a>
+								</div>
+							</result>
+						</div>
+					</div>
+				</div>
+
+				<section class="detail-page">
+					<div class="container mt-5"></div>
+				</section>
+			
+
+		{% endfor %}
+	</div>
+	{{ include('/blog/footer.html.twig') }}
 {% endblock %}

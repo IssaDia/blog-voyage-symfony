@@ -22,19 +22,12 @@ class ArticleRepository extends ServiceEntityRepository
 
     public function searchArticle($query)
     {
-
-        
         return $this->createQueryBuilder('a')
-            ->where('a.title LIKE :query')
-            ->setParameter('query', $query)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
+            ->where('a.title LIKE :query')->orWhere('a.content LIKE :query')
+            ->setParameter('query', '%' . $query . '%')->getQuery()
             ->getResult();
-
-        ;
     }
-    
+
 
 
     /*
@@ -48,6 +41,4 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
-
-  
 }
