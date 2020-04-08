@@ -2,9 +2,18 @@
 
 {% block body %}
 	{{ include('/blog/navbar.html.twig') }}
-    		<h1><span>Recherche</span></h1>
+	<h1>
+		<span>Recherche</span>
+	</h1>
 
 
-	{{form(searchForm)}}
-		{{ include('/blog/footer.html.twig') }}
-	{% endblock %}
+	{{ form_start(searchForm
+			, {'attr': {'class': 'search'}})}}
+
+	
+	{{ form_end(searchForm
+			)}}
+
+
+	{{ include('/blog/footer.html.twig') }}
+{% endblock %}

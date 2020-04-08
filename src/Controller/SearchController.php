@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,13 +20,13 @@ class SearchController extends AbstractController
     {
 
         $searchForm = $this->createFormBuilder(null)
-            ->add('recherche', TextType::class)
-            ->add('submit', SubmitType::class)
+            ->add('search', SearchType::class, array('label' => false))
+            ->add('search here', SubmitType::class)
             ->getForm();
 
 
         if ($searchForm->handleRequest($request)->isSubmitted() && $searchForm->isValid()) {
-            $query = $request->request->get('form')['recherche'];
+            $query = $request->request->get('form')['search'];
         $results = $articleRepository->searchArticle($query);
 
         return $this->render('search/results.html.twig', [
