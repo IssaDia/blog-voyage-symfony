@@ -85,11 +85,6 @@ li {
   box-sizing: border-box;
 }
 
-nav {
-  margin-bottom: 40px;
-  border-bottom: 1px black solid;
-  padding-top: 40px;
-}
 
 body {
 
@@ -372,6 +367,10 @@ a {
   border-radius: 5px 5px 0 0;
   height: 15rem;
   box-shadow: inset hsla(0, 0, 0, .2) 0 64px 64px 16px;
+}
+
+.blog-card a {
+  text-decoration:none
 }
 
 .blog-author,
@@ -1098,5 +1097,42 @@ footer .social a:hover {
 .home-span {
   color: #FFB535;
 }
+
+
+/* Pagination */
+
+.pagination {
+ 
+
+  margin:0 auto;
+  text-align:center;
+  margin-top: 30px;
+}
+
+.pagination ul {
+  display: inline-block;
+  
+}
+
+.page-link {
+  color: #000000 !important;
+  background-color: #eee !important;
+}
+
+
+
+.page-link {
+  font-size: 14px;
+  display:inline-block;
+  
+}
+
+
+
+.page-item.active .page-link {
+  color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
 
 
