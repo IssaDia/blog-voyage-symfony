@@ -10,7 +10,7 @@
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.2.*",
-        "symfony/console": "4.2.*",
+        "symfony/console": "4.4.*",
         "symfony/dotenv": "4.2.*",
         "symfony/expression-language": "4.2.*",
         "symfony/flex": "^1.1",
@@ -66,7 +66,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "requirements-checker": "script"
+            "requirements-checker": "script",
+            "doctrine:migrations:migrate --no-interaction": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

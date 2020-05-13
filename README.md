@@ -41,7 +41,7 @@ composer install
 4./ Configurer la base de données 
 
 éditer le fichier .env pour ajouter votre nom de base de données, login et mots de passe mysql. 
-(Exemple: DATABASE_URL=mysql://student:'mot de passe'@127.0.0.1:3306/kikipaye)
+(Exemple: DATABASE_URL=mysql://student:'mot de passe'@localhost:3306/kikipaye)
 
 5./ Créer la base de données
 
@@ -55,7 +55,7 @@ composer install
 
 php bin/console server:run
 
-8./ Accéder au site web via un navigateur http://127.0.0.1:8000
+8./ Accéder au site web via un navigateur http://localhost:8000
 
 
 Fonctionnalités
