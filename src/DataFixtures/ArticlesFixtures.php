@@ -4,24 +4,23 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Article;
+use App\Entity\Category;
 
 class ArticlesFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i=1;$i<=10;$i++){
+        
 
-          $article = new Article();
-          $article->setTitle("Titre de l'article n°$i")
-                  ->setContent("<p>Contenu de l'article n°$i")
-                  ->setImage("https://via.placeholder.com/150")
-                  ->setCreatedAt(new \DateTime());
+          $continent = ['Afrique','Amerique du Nord', 'Amerique du Sud', ' Asie', 'Europe', 'Oceanie'];
 
-          $manager->persist($article);
+          foreach ($continent as $value) {
+            $category = new Category();
+          $category->setTitle($value);
 
-        }
-
+          $manager->persist($category);
+          }
+     
         $manager->flush();
     }
 }

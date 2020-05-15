@@ -370,7 +370,7 @@ a {
 }
 
 .blog-card a {
-  text-decoration:none
+  text-decoration: none
 }
 
 .blog-author,
@@ -562,20 +562,25 @@ a {
   height: 36px;
   border-width: 0 0 2px 0;
   border-color: #5543ca;
-  font-size: 18px;
-  line-height: 26px;
-  font-weight: 400;
+  font-size: 14px;
+
 }
 
 .contact-form .input-text:focus {
   outline: none;
   border: #ffffff;
+
 }
 
 .contact-form .input-text:focus+.label,
 .contact-form .input-text.not-empty+.label {
   -webkit-transform: translateY(-24px);
   transform: translateY(-24px);
+
+}
+
+.contact-form .input-text.not-empty+.label {
+  color: red
 }
 
 .contact-form .label {
@@ -601,7 +606,7 @@ a {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 16px;
-  padding: 8px 16px;
+  padding: 1px 16px;
   border: none;
   width: 200px;
   cursor: pointer;
@@ -1013,15 +1018,17 @@ a {
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 .footer {
-  font-family: Raleway, sans-serif;
-  width: 100%;
-  margin: 2em 0;
-  height: 70px;
+
   background-color: #000;
+  height: 70px;
+  margin-top: 300px;
+  bottom: 0;
+  width: 100%;
+
 }
 
 .copyright {
-  width: 50%;
+
   float: left;
 
 }
@@ -1070,19 +1077,19 @@ footer .social a:hover {
 .git {
   background-color: #3D5B94;
   font-size: 1.2em;
-  width: 33%;
+
 }
 
 .contact {
   background-color: #6dcd9a;
   font-size: 0.8em;
-  width: 33%;
+
 }
 
 .linkedin {
   background-color: #1E83AE;
   font-size: 1.2em;
-  width: 33%;
+
 }
 
 
@@ -1102,16 +1109,16 @@ footer .social a:hover {
 /* Pagination */
 
 .pagination {
- 
 
-  margin:0 auto;
-  text-align:center;
+
+  margin: 0 auto;
+  text-align: center;
   margin-top: 30px;
 }
 
 .pagination ul {
   display: inline-block;
-  
+
 }
 
 .page-link {
@@ -1123,8 +1130,8 @@ footer .social a:hover {
 
 .page-link {
   font-size: 14px;
-  display:inline-block;
-  
+  display: inline-block;
+
 }
 
 
@@ -1133,6 +1140,3 @@ footer .social a:hover {
   color: #ffffff !important;
   background-color: #000000 !important;
 }
-
-
-
