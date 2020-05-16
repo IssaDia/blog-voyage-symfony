@@ -1,0 +1,7 @@
+assetic:
+    filters:
+        jpegoptim:
+            bin: path/to/jpegoptim
+    twig:
+        functions:
+            jpegoptim: ~

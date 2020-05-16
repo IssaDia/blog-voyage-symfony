@@ -28,11 +28,10 @@ Installation Step By Step
 
 1./ Cloner le projet depuis github
 
- git clone https://github.com/IssaDiaDev/ProjectPhpHB.git
+ git clone git@github.com:IssaDia/blogVoyageSymfony.git
 
 2./ Allez dans le répertoire dans lequel vous avez téléchargé le projet
 
-cd ProjectPhpHB
 
 3./ Récupérer via composer les dépendances du projet
 
@@ -61,17 +60,11 @@ php bin/console server:run
 Fonctionnalités
 
     afficher une liste d'articles
-    ajouter /supprimer /modifier des articles
-    commenter un article
-    login pour commenter un article (en cours de développement)
+    faire une recherche d'article
+    sign up puis login permettant ajouter /supprimer /modifier/commenter des articles
     
     
-  A corriger
-  
-  
-  revoir la sécurité concernant le nombre de mots à intégrer à un article quand on le modifie 
-  (nombre de caractéres autorisés trop bas)
-    
+
     
 
 
